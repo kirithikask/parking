@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parking Slots</title>
+</head>
+<body>
+<h2>🅿️ Parking Slots</h2>
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
+<h3>Add New Slot</h3>
+<form th:action="@{/slots/add}" method="post">
+    Slot Number: <input type="text" name="slotNumber" required><br>
+    Type: <input type="text" name="type"><br>
+    Status: <input type="text" name="status"><br>
+    Floor: <input type="text" name="floor"><br>
+    <button type="submit">Add Slot</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th><th>Slot Number</th><th>Type</th><th>Status</th><th>Floor</th><th>Actions</th>
+    </tr>
+    <tr th:each="slot : ${slots}">
+        <td th:text="${slot.slotId}"></td>
+        <td th:text="${slot.slotNumber}"></td>
+        <td th:text="${slot.type}"></td>
+        <td th:text="${slot.status}"></td>
+        <td th:text="${slot.floor}"></td>
+        <td>
+            <form th:action="@{'/slots/update/' + ${slot.slotId}}" method="post" style="display: inline;">
+                Slot Number: <input type="text" name="slotNumber" th:value="${slot.slotNumber}" required><br>
+                Type: <input type="text" name="type" th:value="${slot.type}"><br>
+                Status: <input type="text" name="status" th:value="${slot.status}"><br>
+                Floor: <input type="text" name="floor" th:value="${slot.floor}"><br>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{'/slots/delete/' + ${slot.slotId}}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?')">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>

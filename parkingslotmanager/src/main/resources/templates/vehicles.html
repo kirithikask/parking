@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicles - Parking Slot Manager</title>
+</head>
+<body>
+<h2>🚘 Vehicle List</h2>
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
+<h3>Add New Vehicle</h3>
+<form th:action="@{/vehicles/add}" method="post">
+    User ID: <input type="number" name="userId" required><br>
+    License Plate: <input type="text" name="licensePlate" required><br>
+    Type: <input type="text" name="type"><br>
+    Model: <input type="text" name="model"><br>
+    <button type="submit">Add Vehicle</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>License Plate</th>
+        <th>Type</th>
+        <th>Model</th>
+        <th>Owner</th>
+        <th>Registered At</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.vehicleId}"></td>
+        <td th:text="${vehicle.licensePlate}"></td>
+        <td th:text="${vehicle.type}"></td>
+        <td th:text="${vehicle.model}"></td>
+        <td th:text="${vehicle.user != null ? vehicle.user.name : 'N/A'}"></td>
+        <td th:text="${vehicle.registeredAt != null ? #temporals.format(vehicle.registeredAt, 'yyyy-MM-dd HH:mm') : 'N/A'}"></td>
+        <td>
+            <form th:action="@{'/vehicles/update/' + ${vehicle.vehicleId}}" method="post" style="display: inline;">
+                User ID: <input type="number" name="userId" th:value="${vehicle.user != null ? vehicle.user.userId : ''}" required><br>
+                License Plate: <input type="text" name="licensePlate" th:value="${vehicle.licensePlate}" required><br>
+                Type: <input type="text" name="type" th:value="${vehicle.type}"><br>
+                Model: <input type="text" name="model" th:value="${vehicle.model}"><br>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{'/vehicles/delete/' + ${vehicle.vehicleId}}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?')">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>

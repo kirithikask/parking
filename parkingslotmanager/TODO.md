@@ -1,0 +1,6 @@
+- Update UIController.java to add POST mappings for form submissions (add, edit, delete for users, vehicles, slots, logs) ✅
+- Update user.html to include forms for add, edit, delete user ✅
+- Update vehicles.html to include forms for add, edit, delete vehicle ✅
+- Update slot.html to include forms for add, edit, delete slot ✅
+- Update logs.html to include forms for add, edit, delete log ✅
+- Test the forms by running the application and verifying CRUD operations

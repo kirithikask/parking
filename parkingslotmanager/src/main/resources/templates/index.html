@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parking Slot Manager</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>🚗 Parking Slot Manager</h1>
+<p>Welcome to the Parking Slot Management System</p>
+
+<h3>Navigation</h3>
+<ul>
+    <li><a th:href="@{/users/view}">👤 Manage Users</a></li>
+    <li><a th:href="@{/vehicles/view}">🚘 Manage Vehicles</a></li>
+    <li><a th:href="@{/slots/view}">🅿️ Manage Parking Slots</a></li>
+    <li><a th:href="@{/logs/view}">🕓 View Parking Logs</a></li>
+    <li><a th:href="@{/reports/view}">📊 Reports</a></li>
+</ul>
+</body>
+</html>

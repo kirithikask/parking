@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+</head>
+<body>
+<h2>📊 Occupancy Report</h2>
+
+<p>Total Slots: <span th:text="${report.totalSlots}"></span></p>
+<p>Occupied: <span th:text="${report.occupiedSlots}"></span></p>
+<p>Available: <span th:text="${report.availableSlots}"></span></p>
+<p>Occupancy Rate: <span th:text="${report.occupancyRate}"></span></p>
+
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>

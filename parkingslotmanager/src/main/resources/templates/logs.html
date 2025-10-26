@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parking Logs - Parking Slot Manager</title>
+</head>
+<body>
+<h2>🕓 Parking Logs</h2>
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
+<h3>Add New Log</h3>
+<form th:action="@{/logs/add}" method="post">
+    Vehicle ID: <input type="number" name="vehicleId" required><br>
+    Slot ID: <input type="number" name="slotId" required><br>
+    Status: <input type="text" name="status"><br>
+    Remarks: <input type="text" name="remarks"><br>
+    <button type="submit">Add Log</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Vehicle (License Plate)</th>
+        <th>Slot Number</th>
+        <th>Entry Time</th>
+        <th>Exit Time</th>
+        <th>Status</th>
+        <th>Remarks</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="log : ${logs}">
+        <td th:text="${log.logId}"></td>
+        <td th:text="${log.vehicle != null ? log.vehicle.licensePlate : 'N/A'}"></td>
+        <td th:text="${log.slot != null ? log.slot.slotNumber : 'N/A'}"></td>
+        <td th:text="${log.entryTime != null ? #temporals.format(log.entryTime, 'yyyy-MM-dd HH:mm') : 'N/A'}"></td>
+        <td th:text="${log.exitTime != null ? #temporals.format(log.exitTime, 'yyyy-MM-dd HH:mm') : 'N/A'}"></td>
+        <td th:text="${log.status}"></td>
+        <td th:text="${log.remarks}"></td>
+        <td>
+            <form th:action="@{'/logs/update/' + ${log.logId}}" method="post" style="display: inline;">
+                Vehicle ID: <input type="number" name="vehicleId" th:value="${log.vehicle != null ? log.vehicle.vehicleId : ''}" required><br>
+                Slot ID: <input type="number" name="slotId" th:value="${log.slot != null ? log.slot.slotId : ''}" required><br>
+                Status: <input type="text" name="status" th:value="${log.status}"><br>
+                Remarks: <input type="text" name="remarks" th:value="${log.remarks}"><br>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{'/logs/delete/' + ${log.logId}}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?')">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users - Parking Slot Manager</title>
+</head>
+<body>
+<h2>👤 User List</h2>
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
+<h3>Add New User</h3>
+<form th:action="@{/users/add}" method="post">
+    Name: <input type="text" name="name" required><br>
+    Email: <input type="email" name="email" required><br>
+    Contact: <input type="text" name="contact"><br>
+    Role: <input type="text" name="role"><br>
+    <button type="submit">Add User</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th><th>Name</th><th>Email</th><th>Contact</th><th>Role</th><th>Actions</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.contact}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <form th:action="@{'/users/update/' + ${user.userId}}" method="post" style="display: inline;">
+                Name: <input type="text" name="name" th:value="${user.name}" required><br>
+                Email: <input type="email" name="email" th:value="${user.email}" required><br>
+                Contact: <input type="text" name="contact" th:value="${user.contact}"><br>
+                Role: <input type="text" name="role" th:value="${user.role}"><br>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{'/users/delete/' + ${user.userId}}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?')">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/}">⬅ Back to Home</a>
+</body>
+</html>
